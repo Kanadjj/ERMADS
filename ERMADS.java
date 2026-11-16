@@ -386,14 +386,15 @@ public class ERMADS {
         int choice;
         do {
             System.out.println("\n===== ERMADS =====");
-            System.out.println("1. Register Emergency");
-            System.out.println("2. Add Rescue Team");
-            System.out.println("3. View System Status");
-            System.out.println("4. Dispatch Mission");
-            System.out.println("5. View Active Missions");
-            System.out.println("6. Complete Mission");
-            System.out.println("7. Add Road");
-            System.out.println("8. Find Shortest Route");
+            System.out.print("1. Register Emergency / ");
+            System.out.print("2. Add Rescue Team / ");
+            System.out.print("3. View System Status / ");
+            System.out.print("4. Dispatch Mission / ");
+            System.out.print("5. View Active Missions / ");
+            System.out.print("6. Complete Mission / ");
+            System.out.print("7. Add Road / ");
+            System.out.print("8. Find Shortest Route / ");
+            System.out.print("9. Display Road Network / ");
             System.out.println("0. Exit");
 
             choice = number("Enter choice: ");
@@ -408,6 +409,8 @@ public class ERMADS {
                 case 7: addRoad(); break;
                 case 8:
                     graph.shortestRoute(input("Start: "), input("Destination: "));
+                    break;
+                case 9: graph.display();
                     break;
                 case 0: System.out.println("Exiting ERMADS."); break;
                 default: System.out.println("Invalid choice.");
