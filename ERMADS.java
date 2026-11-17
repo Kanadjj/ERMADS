@@ -10,7 +10,7 @@ class Emergency {
         this.location = location;
         this.priority = priority;
     }
-
+// Display emergency details
     void display() {
         System.out.println("ID: " + id + " | " + type + " | " + location +
                 " | Priority: " + priority);
@@ -22,11 +22,11 @@ class EmergencyPriorityQueue {
     class Node {
         Emergency data;
         Node next;
-        Node(Emergency e) { data = e; }
+        Node(Emergency e) { data = e; } //// Refrence variable e
     }
-
+// Head of the priority queue (highest priority emergency)
     Node head;
-// Lower priority number means higher urgency
+// Add a new emergency to the queue based on priority
     void add(Emergency e) {
         Node n = new Node(e);
         if (head == null || e.priority < head.data.priority) {
@@ -34,13 +34,17 @@ class EmergencyPriorityQueue {
             head = n;
             return;
         }
+        // Find the correct position to insert based on priority
+        //Declaring temporary node t to traverse the linked list
         Node t = head;
-        while (t.next != null && t.next.data.priority <= e.priority)
+        while (t.next != null && t.next.data.priority <= e.priority){
             t = t.next;
+        }
         n.next = t.next;
         t.next = n;
     }
 // Remove the highest priority emergency (lowest priority number)
+// We are upposed to return entire emergency object, because of this we used Emergengcy as return type and not void.
     Emergency remove() {
         if (head == null) return null;
         Emergency e = head.data;
@@ -57,13 +61,22 @@ class EmergencyPriorityQueue {
             t.data.display();
     }
 }
+// Rescue Team class to represent dispatchable teams
+class RescueTeam {
+    int id;
+    String name;
 
-// 2. QUEUE - Available rescue teams
+    RescueTeam(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+}
+// 2. QUEUE - Dispatchable Rescue Teams
 class TeamQueue {
     class Node {
         RescueTeam data;
         Node next;
-        Node(RescueTeam t) { data = t; }
+        Node(RescueTeam t) { data = t; } // Reference variable t
     }
 // Front of the queue is where teams are removed, rear is where teams are added
     Node front, rear;
@@ -77,6 +90,7 @@ class TeamQueue {
         }
     }
 // Remove the next available rescue team from the queue
+// We are upposed to return entire RescueTeam object, because of this we used RescueTeam as return type and not void.
     RescueTeam remove() {
         if (front == null) return null;
         RescueTeam t = front.data;
@@ -95,15 +109,6 @@ class TeamQueue {
     }
 }
 
-class RescueTeam {
-    int id;
-    String name;
-
-    RescueTeam(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-}
 // Mission class to link emergencies and rescue teams
 class Mission {
     Emergency emergency;
@@ -168,7 +173,7 @@ class Graph {
     class Road {
         String destination;
         int distance;
-        Road next;
+        Road next; // Points to another road (also called self-referential structure)
 // Linked list of roads from a location
         Road(String d, int w) {
             destination = d;
@@ -179,17 +184,18 @@ class Graph {
     class Location {
         String name;
         Road roads;
-
         Location(String n) { name = n; }
     }
 // Array of locations in the graph
     Location[] locations = new Location[50];
+// Current number of locations in the graph
     int count = 0;
 // Find the index of a location by name
+// Useful as it allows us to quickly access the location in the array for adding roads or finding routes.
     int index(String name) {
         for (int i = 0; i < count; i++)
             if (locations[i].name.equalsIgnoreCase(name)) return i;
-        return -1;
+        return -1; // Not found
     }
 // Add a new location if it doesn't already exist
     void addLocation(String name) {
